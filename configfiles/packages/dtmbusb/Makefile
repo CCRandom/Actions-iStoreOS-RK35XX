@@ -4,12 +4,11 @@ PKG_NAME:=dtmbusb
 PKG_VERSION:=1.0
 PKG_RELEASE:=1
 
-# No source download - use local files
-PKG_SOURCE:=
-PKG_SOURCE_URL:=
-PKG_SOURCE_PROTO:=
-PKG_SOURCE_VERSION:=
-PKG_MIRROR_HASH:=
+# Use Git to get source code
+PKG_SOURCE_URL:=https://github.com/nxdong520/DtmbUSB.git
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_VERSION:=HEAD
+PKG_MIRROR_HASH:=skip
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -33,6 +32,8 @@ endef
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
+	# Remove any .git directories to avoid issues
+	rm -rf $(PKG_BUILD_DIR)/.git 2>/dev/null || true
 endef
 
 define Build/Compile
